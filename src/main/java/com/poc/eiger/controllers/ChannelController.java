@@ -168,7 +168,7 @@ public class ChannelController {
         		updatedChannel.setOverrideValue(channel.getOverrideValue());
         	}
         	
-        	if(channel.getHold() == true || channel.getOverride() == true ) {
+        	if(channel.getHold() == true) {
         		updatedChannel.setFinalTarget(prevFcstSales);
         	}else {
         		updatedChannel.setFinalTarget(channel.getOverrideValue());

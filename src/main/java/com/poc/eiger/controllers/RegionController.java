@@ -164,9 +164,10 @@ public class RegionController {
 				updatedRegion.setPercentageOverride(region.getPercentageOverride());
 			}
 
-			if (region.getHold() == true || region.getOverride() == true) {
+			if (region.getHold() == true) {
 				updatedRegion.setFinalTarget(prevInitialTarget);
 			} else {
+				// need to calculate with percentage of "PercentageOverride"
 				updatedRegion.setFinalTarget(region.getFinalTarget());
 			}
 
