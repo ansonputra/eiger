@@ -24,6 +24,7 @@ public class Channel implements Serializable {
     private BigDecimal fcstSales;
     private Boolean hold;
     private Boolean override;
+    private float overridePercentage;
     private BigDecimal overrideValue;
     private BigDecimal finalTarget;
     
@@ -70,6 +71,12 @@ public class Channel implements Serializable {
 	public void setOverride(Boolean override) {
 		this.override = override;
 	}
+	public float getOverridePercentage() {
+		return overridePercentage;
+	}
+	public void setOverridePercentage(float overridePercentage) {
+		this.overridePercentage = overridePercentage;
+	}
 	public BigDecimal getOverrideValue() {
 		return overrideValue;
 	}
@@ -88,9 +95,10 @@ public class Channel implements Serializable {
 	@Override
 	public String toString() {
 		return "Channel [id=" + id + ", name=" + name + ", percentagePY=" + percentagePY + ", pYSales=" + pYSales
-				+ ", fcstSales=" + fcstSales + ", hold=" + hold + ", override=" + override + ", overrideValue="
-				+ overrideValue + ", finalTarget=" + finalTarget + "]";
+				+ ", fcstSales=" + fcstSales + ", hold=" + hold + ", override=" + override + ", overridePercentage="
+				+ overridePercentage + ", overrideValue=" + overrideValue + ", finalTarget=" + finalTarget + "]";
 	}
+	
 	
 
 }
