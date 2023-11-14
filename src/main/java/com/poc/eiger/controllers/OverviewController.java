@@ -1,5 +1,7 @@
 package com.poc.eiger.controllers;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.poc.eiger.dto.TotalOverview;
 import com.poc.eiger.entities.Overview;
 import com.poc.eiger.repositories.OverviewRepository;
 
@@ -28,7 +31,7 @@ public class OverviewController {
 	@Autowired
     private OverviewRepository overviewRepository;
 	
-    @GetMapping("/overview")
+    @GetMapping("/overviews")
     public ResponseEntity<List<Overview>> findAll(
             @RequestParam(name = "name", 
                     required = false, 
@@ -45,6 +48,47 @@ public class OverviewController {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(overviews, HttpStatus.OK);
+            
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+    
+    @GetMapping("/all/overviews")
+    public ResponseEntity<TotalOverview> findAllOv(
+            @RequestParam(name = "year", 
+                    required = false, 
+                    defaultValue = "") String year) {
+        try {
+            TotalOverview totalOverviewObj = new TotalOverview(); 
+            List<Overview> overviews;
+            if (StringUtils.hasText(year)) {
+            	//businessUnitsObj = businessUnitRepository.findByNameContaining(name);
+            } else {
+            	//businessUnitsObj = businessUnitRepository.findAll();
+            	overviews = overviewRepository.findAll();
+            	BigDecimal total = overviewRepository.grandTotal();
+            	totalOverviewObj.setGrandTotal(total);
+            	List<Overview> overviewList = new ArrayList<>();
+            	int sumOverview = overviews.size();
+       
+            	for (int indexhl = 0; indexhl < sumOverview; indexhl++) {
+            		Overview overviewdto = new Overview();
+            		overviewdto.setId(overviews.get(indexhl).getId());
+            		overviewdto.setYear(overviews.get(indexhl).getYear());
+            		overviewdto.setMonth(overviews.get(indexhl).getMonth());
+            		overviewdto.setAmount(overviews.get(indexhl).getAmount());
+            		overviewList.add(overviewdto);
+            	}
+            	
+            	totalOverviewObj.setOverviews(overviewList);
+            }
+            
+            if (totalOverviewObj.equals(null)) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(totalOverviewObj, HttpStatus.OK);
             
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
