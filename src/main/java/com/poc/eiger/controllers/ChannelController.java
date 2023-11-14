@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.poc.eiger.entities.BusinessUnit;
+import com.poc.eiger.dto.BusinessUnit;
 import com.poc.eiger.entities.Channel;
 import com.poc.eiger.repositories.ChannelRepository;
 

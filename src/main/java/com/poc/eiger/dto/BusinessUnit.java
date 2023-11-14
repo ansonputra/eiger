@@ -1,8 +1,10 @@
-package com.poc.eiger.entities;
+package com.poc.eiger.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+
+import com.poc.eiger.entities.Channel;
 
 
 public class BusinessUnit implements Serializable {

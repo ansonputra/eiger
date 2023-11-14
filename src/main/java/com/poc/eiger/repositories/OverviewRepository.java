@@ -1,14 +1,15 @@
 package com.poc.eiger.repositories;
 
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.poc.eiger.entities.Channel;
+import com.poc.eiger.entities.Overview;
 
 @EnableJpaRepositories
-public interface ChannelRepository extends JpaRepository<Channel, String> {
+public interface OverviewRepository extends JpaRepository<Overview, String> {
 
-	public List<Channel> findByNameContaining(String year);
+	public List<Overview> findByYearContaining(String year);
 	
 }
