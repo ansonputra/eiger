@@ -20,8 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.poc.eiger.dto.OverviewLastYear;
 import com.poc.eiger.dto.TotalOverview;
+import com.poc.eiger.dto.TotalOverviewLastYear;
+import com.poc.eiger.entities.Channel;
 import com.poc.eiger.entities.Overview;
+import com.poc.eiger.repositories.ChannelRepository;
 import com.poc.eiger.repositories.OverviewRepository;
 
 @RestController
@@ -30,6 +34,9 @@ public class OverviewController {
 	
 	@Autowired
     private OverviewRepository overviewRepository;
+	
+	@Autowired
+    private ChannelRepository channelRepository;
 	
     @GetMapping("/overviews")
     public ResponseEntity<List<Overview>> findAll(
@@ -54,6 +61,54 @@ public class OverviewController {
         }
 
     }
+    
+    @GetMapping("/overviews/lastYear")
+    public ResponseEntity<TotalOverviewLastYear> findLastYear(
+            @RequestParam(name = "name", 
+                    required = false, 
+                    defaultValue = "") String name) {
+        try {
+            List<Channel> channels;
+            TotalOverviewLastYear totalOverviewLastYearDTO = new TotalOverviewLastYear(); 
+            
+            if (StringUtils.hasText(name)) {
+            	channels = channelRepository.findByNameContaining(name);
+            } else {
+            	channels = channelRepository.findAll();
+            	int sumChannels = channels.size();
+            	
+            	//BigDecimal total = overviewRepository.grandTotal();
+            	float totalPercentage = channelRepository.totalpercentagePY();
+            	BigDecimal totalSales = channelRepository.totalpYSales();
+            	
+            	totalOverviewLastYearDTO.setYear("2022");
+        		totalOverviewLastYearDTO.setTotalPercentage(totalPercentage);
+        		totalOverviewLastYearDTO.setTotalSales(totalSales);
+        		
+        		List<OverviewLastYear> overviewList = new ArrayList<>();
+            	
+            	for (int indexhl = 0; indexhl < sumChannels; indexhl++) {
+            		OverviewLastYear overviewLastYearDTO = new OverviewLastYear();
+            		overviewLastYearDTO.setName(channels.get(indexhl).getName());
+            		overviewLastYearDTO.setPercentagePY(channels.get(indexhl).getPercentagePY());
+            		overviewLastYearDTO.setpYSales(channels.get(indexhl).getpYSales());
+            		overviewList.add(overviewLastYearDTO);
+            	}
+            	
+            	totalOverviewLastYearDTO.setOverviewLastYears(overviewList);
+            }
+
+            if (totalOverviewLastYearDTO.equals(null)) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(totalOverviewLastYearDTO, HttpStatus.OK);
+            
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+    
     
     @GetMapping("/all/overviews")
     public ResponseEntity<TotalOverview> findAllOv(
