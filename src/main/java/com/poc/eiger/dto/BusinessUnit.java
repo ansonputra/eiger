@@ -17,10 +17,10 @@ public class BusinessUnit implements Serializable {
     private BigDecimal fcstSales;
     private Boolean hold;
     private Boolean override;
+    private float overridePercentage;
     private BigDecimal overrideValue;
     private BigDecimal finalTarget;
     private List<Channel> channels;
-    
 	public String getName() {
 		return name;
 	}
@@ -57,6 +57,12 @@ public class BusinessUnit implements Serializable {
 	public void setOverride(Boolean override) {
 		this.override = override;
 	}
+	public float getOverridePercentage() {
+		return overridePercentage;
+	}
+	public void setOverridePercentage(float overridePercentage) {
+		this.overridePercentage = overridePercentage;
+	}
 	public BigDecimal getOverrideValue() {
 		return overrideValue;
 	}
@@ -78,12 +84,14 @@ public class BusinessUnit implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	@Override
 	public String toString() {
 		return "BusinessUnit [name=" + name + ", percentagePY=" + percentagePY + ", pYSales=" + pYSales + ", fcstSales="
-				+ fcstSales + ", hold=" + hold + ", override=" + override + ", overrideValue=" + overrideValue
-				+ ", finalTarget=" + finalTarget + ", channels=" + channels + "]";
+				+ fcstSales + ", hold=" + hold + ", override=" + override + ", overridePercentage=" + overridePercentage
+				+ ", overrideValue=" + overrideValue + ", finalTarget=" + finalTarget + ", channels=" + channels + "]";
 	}
-      
+
+    
 
 }

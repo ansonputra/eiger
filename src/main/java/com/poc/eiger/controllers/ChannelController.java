@@ -81,6 +81,7 @@ public class ChannelController {
             		channeldto.setFcstSales(channels.get(indexhl).getFcstSales());
             		channeldto.setHold(channels.get(indexhl).getHold());
             		channeldto.setOverride(channels.get(indexhl).getOverride());
+            		channeldto.setOverridePercentage(channels.get(indexhl).getOverridePercentage());
             		channeldto.setOverrideValue(channels.get(indexhl).getOverrideValue());
             		channeldto.setFinalTarget(channels.get(indexhl).getFinalTarget());
             		channelList.add(channeldto);
@@ -125,6 +126,7 @@ public class ChannelController {
             newChannel.setFcstSales(channel.getFcstSales());
             newChannel.setHold(channel.getHold());
             newChannel.setOverride(channel.getOverride());
+            newChannel.setOverridePercentage(channel.getOverridePercentage());
             newChannel.setOverrideValue(channel.getOverrideValue());
             newChannel.setFinalTarget(channel.getFinalTarget());
             return new ResponseEntity<>(channelRepository.save(newChannel), HttpStatus.CREATED);
@@ -196,6 +198,7 @@ public class ChannelController {
         	updatedChannel.setFcstSales(channel.getFcstSales());
         	updatedChannel.setHold(channel.getHold());
         	updatedChannel.setOverride(channel.getOverride());
+        	updatedChannel.setOverridePercentage(channel.getOverridePercentage());
         	updatedChannel.setOverrideValue(channel.getOverrideValue());
             updatedChannel.setFinalTarget(channel.getFinalTarget());
 
